@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body>
+
+<header>
+    <%- include('partials/header', {title: title}); %>
+</header>
+
+<main class="pt-4">
+  	<% if (hosts.length>0){ %>
+    <div class="row align-items-center text-center mx-auto">
+    	<h1 class="mx-auto">Select Host</h1>
+
+			<table class="table table-striped">
+				<thead>
+			    <tr>
+			      <th scope="col">Host ID</th>
+			      <th scope="col">Name</th>
+			      <th scope="col">Address</th>
+			      <th scope="col">Visit</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+					<% hosts.forEach(function(host){ %>
+				    <tr>
+				      <th scope="row"><%= host.id %></th>
+				      <td><%= host.hostname %></td>
+				      <td><%= host.address %></td>
+				      <td>
+					      <form action="/visitor/" method="POST">
+					      	<input value="<%=host.id%>" name="host_id" hidden>
+						    	<button type="submit" class="btn btn-primary">Get Appointment
+						    	</button>
+								</form>
+				      </td>
+				    </tr>
+					<% }) %>
+			  </tbody>
+			</table>
+		</div>
+		<% } else{ %>
+			<div class="jumbotron text-center">
+				<h2>We have no hosts yet!</h2>
+				<div>
+					<a href="/host/"><button type="submit" class="btn btn-primary">Register as Host</button></a>
+				</div>
+			</div>
+		<% } %>
+</main>
+
+<footer>
+    <%- include('partials/footer') %>
+</footer>
+
+</body>
+</html>

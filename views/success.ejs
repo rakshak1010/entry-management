@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body>
+
+<header>
+    <%- include('partials/header', {title: title}); %>
+</header>
+
+<main class="pt-6">
+    <div class="jumbotron jumbotron-fluid">
+    	<div class="container text-center">
+        <% if (typeof host !== 'undefined') { %>
+        	<h3 class="display-4">
+        		<%= host.hostname.toUpperCase() %> Registered Successfully!
+        	</h3>
+        <% } else if(typeof visitor !== 'undefined') { %>
+        	<h3 class="display-4">
+        		<%=visitor.visitorname.toUpperCase()%>, your appointment has been created successfully!
+        	</h3>
+        		<br><h5>Please check your email for further details.</h5>
+        <% } else if(checkout) { %>
+        	<h3 class="display-4">
+        		<%=checkout.visitorname.toUpperCase()%>, your have been checked out.
+        	</h3>
+        		<br><h5>Please check your email for your visiting details.</h5>
+        <% } %>
+      </div>
+		</div>
+</main>
+
+
+<footer>
+    <%- include('partials/footer') %>
+</footer>
+
+</body>
+</html>
