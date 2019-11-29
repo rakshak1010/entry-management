@@ -27,5 +27,6 @@ module.exports = {
   "mailInfo": {
     "username" : 'xxxxxxxxx@xxx.com' ,
     "password" : 'xxxx-xxxx-xxxx' 
-  }
+  },
+  "webdomain": 'ENTERYOURDOMAIN (example: localhost:3000)'
 }

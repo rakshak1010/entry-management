@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
     <%- include('partials/head') %>
+    <style>
+    	.hover:hover {
+    		box-shadow: 8px 8px 17px grey;
+			}
+			.hover{
+    		border: 1.5px solid black;
+    		box-shadow: 8px 8px 8px grey;
+    	}
+
+    </style>
 </head>
 <body>
 
@@ -10,16 +20,18 @@
 </header>
 
 <main>
-	    <div class="container d-flex align-items-center min-vh-100">
-        <h1 class="text-center">Welcome to Our Office</h1>
-	    	<table class="table table-striped">
-					<thead>
-				    <tr>
-				      <th scope="col"><a href="/hosts"><i class="fas fa-search"></i> &nbspFind Your Host</a></th>
-				      <th scope="col"><a href="/host/"><i class="fas fa-briefcase"></i> &nbspRegister as Host</a></th>
-				    </tr>
-				  </thead>
-				</table>
+	    <div class="container h-100 mt-auto">
+        <div class="text-center mx-auto w-75" style="margin-top: 160px;">
+        	<div class="jumbotron"><h1 class="display-4"><strong>Welcome to Our Office</strong></h1></div>
+					<div class="row justify-content-around">
+						<a href="/hosts" class="col-md-4 col-sm-2 p-3 hover">
+							<div class="text-center"><h5><i class="fas fa-search"></i> &nbspFind Your Host</h5></div>
+						</a>
+						<a href="/host/" class="col-md-4 col-sm-2 p-3 hover">
+							<div class="text-center"><h5><i class="fas fa-briefcase"></i> &nbspRegister as Host</h5></div>
+						</a>
+					</div>
+				</div>
 	    </div>
 </main>
 

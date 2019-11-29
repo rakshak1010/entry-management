@@ -97,7 +97,7 @@ async function sendCheckoutLink(visitor) {
 	        }
 	    });
 
-    	var link = 'localhost:3000/visitor/' + visitor.id + '/checkout';
+    	var link = config.webdomain + '/visitor/' + visitor.id + '/checkout';
 
 	    let mail_string = `
 			  Mr. <strong>` + visitor.visitorname.toUpperCase() + `</strong>, Welcome to our office.
