@@ -28,5 +28,9 @@ module.exports = {
     "username" : 'xxxxxxxxx@xxx.com' ,
     "password" : 'xxxx-xxxx-xxxx' 
   },
+  "nexmoSMS": {
+    "API_KEY" : 'xxxxxxxxx' ,
+    "SECRET_KEY" : 'xxxx-xxxx-xxxx' 
+  },
   "webdomain": 'ENTERYOURDOMAIN (example: localhost:3000)'
 }
