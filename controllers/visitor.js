@@ -170,7 +170,7 @@ function sendVisitingSMS(visitor){
     }, {debug:true});
 
     const from = visitor.name;
-    const to = '918295577687';
+    const to = config.nexmoSMS.whitelist_contact;
 
     let sms_string = `
 		  Mr. <strong>` + host.hostname.toUpperCase() + `</strong>, you have a visitor.
@@ -180,7 +180,7 @@ function sendVisitingSMS(visitor){
 		  <br><strong>Visitor Email:</strong> ` + visitor.email + `
 		  <br><strong>Checkin Time:</strong> ` + visitor.checkin + ``;
 
-    nexmo.message.sendSms('918295577687', to, sms_string, {type:'unicode'},(err,response)=>{
+    nexmo.message.sendSms(config.nexmoSMS.whitelist_contact, to, sms_string, {type:'unicode'},(err,response)=>{
       if(err){
         console.log(err);
       }else{

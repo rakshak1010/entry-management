@@ -30,7 +30,8 @@ module.exports = {
   },
   "nexmoSMS": {
     "API_KEY" : 'xxxxxxxxx' ,
-    "SECRET_KEY" : 'xxxx-xxxx-xxxx' 
+    "SECRET_KEY" : 'xxxx-xxxx-xxxx'
+    "whitelist_contact" : '91xxxxxxxxxx'
   },
   "webdomain": 'ENTERYOURDOMAIN (example: localhost:3000)'
 }
