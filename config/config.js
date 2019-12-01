@@ -1,7 +1,7 @@
 module.exports = {
   "development": {
     "username": "db_user_name",
-    "password": 'db_use_password',
+    "password": 'db_user_password',
     "database": "db_name",
     "host": "127.0.0.1",
     "dialect": "postgres",
@@ -30,7 +30,7 @@ module.exports = {
   },
   "nexmoSMS": {
     "API_KEY" : 'xxxxxxxxx' ,
-    "SECRET_KEY" : 'xxxx-xxxx-xxxx'
+    "SECRET_KEY" : 'xxxx-xxxx-xxxx',
     "whitelist_contact" : '91xxxxxxxxxx'
   },
   "webdomain": 'ENTERYOURDOMAIN (example: localhost:3000)'
