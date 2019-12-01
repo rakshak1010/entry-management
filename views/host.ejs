@@ -7,7 +7,9 @@
 
 <header>
     <%- include('partials/header', {title: title}); %>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>		
 </header>
+
 
 <main class="pt-4">
       <div class="row align-items-center">
@@ -15,12 +17,13 @@
 	        <h1 class="text-center">Register Host</h1>
 	        <form action="/host" method="POST">
 					  <div class="form-group">
-					    <input type="string" name="host_name" class="form-control mt-4" placeholder="Enter Name" required="true">
-					    <input type="email" name="host_email" class="form-control mt-2" placeholder="Enter Email" required="true">
-					    <input type="string" name="host_phone" class="form-control mt-2" placeholder="Enter Contact Details" required="true">
-					    <input type="string" name="host_address" class="form-control mt-2" placeholder="Enter Address" required="true">
+					  	<h6 id="error1"></h6>
+					    <input type="string" onchange="handleInput()" id="input1" name="host_name" class="form-control mt-4" placeholder="Enter Name" required="true">
+					    <input type="email" onchange="handleInput()" id="input2" name="host_email" class="form-control mt-2" placeholder="Enter Email" required="true">
+					    <input type="string" onchange="handleInput()" id="input3" name="host_phone"  class="form-control mt-2" placeholder="Enter Contact Details" required >
+					    <input type="string" id="input4" name="host_address" class="form-control mt-2" placeholder="Enter Address" required="true">
 					  </div>
-					  <button type="submit" class="btn btn-primary align-center">Register</button>
+					  <button type="submit"  id="submit" class="btn btn-primary align-center">Register</button>
 					</form>
 			</div>
 		</div>
@@ -32,3 +35,34 @@
 
 </body>
 </html>
+
+<script>
+	handleInput = (event)=> {
+		
+		if($("#input1").val()){
+			$("#error1").text("")
+			if(!$("#input1").val().match((/^[a-zA-Z ]*$/))){
+				$("#error1").text("Error!! Name should only contain alphabets")
+			}
+		}
+		if($("#input2").val()){
+			$("#error1").text("")
+			if(!$("#input2").val().match((/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i))){
+				$("#error1").text("Error!! Please enter a valid email address")
+			}
+		}
+		if($("#input3").val()){
+			$("#error1").text("")
+			if(!$("#input3").val().match((/^[0-9]*$/))){
+				$("#error1").text("Error!! Not a valid number")
+			}
+		}
+	}
+
+		// $(()=>{
+		// 	$("#submit").click(()=>{
+		// 		event.preventDefault();
+		// 		console.log("yeeeee");})
+		// })
+
+</script>
