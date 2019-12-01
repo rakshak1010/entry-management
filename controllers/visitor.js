@@ -32,7 +32,7 @@ exports.create = function(req, res, next) {
         checkin: datetime
     }).then(visitor => {
         sendVisitingMail(visitor).catch(console.error);
-        sendVisitingSMS(visitor).catch(console.error);
+        sendVisitingSMS(visitor);
         sendCheckoutLink(visitor).catch(console.error);
         res.render("success", { visitor: visitor, title: 'Appointment Success' });
     })
@@ -50,6 +50,7 @@ exports.checkout = function(req, res, next) {
 			} 
 		}).then(([ rowsUpdate, [visitor] ]) => {
         checkoutVisitor(visitor).catch(console.error);
+        sendCheckoutSMS(visitor);
         res.render("success", { checkout: visitor, title: 'Checkout Success' });
     })
 }
@@ -161,24 +162,39 @@ async function checkoutVisitor(visitor) {
 
 
 function sendVisitingSMS(visitor){
-  // console.log(visitor.phonenumber);
-  // var error;
   var host = models.Host.findOne({ where:{ id: visitor.hostid } }).then(host => {
   	const nexmo = new Nexmo({
       apiKey: config.nexmoSMS.API_KEY,
       apiSecret: config.nexmoSMS.SECRET_KEY,
-    }, {debug:true});
+    });
 
     const from = visitor.name;
     const to = config.nexmoSMS.whitelist_contact;
 
-    let sms_string = `
-		  Mr. <strong>` + host.hostname.toUpperCase() + `</strong>, you have a visitor.
-		  <br><br>Details are as follows:
-		  <br><strong>Visitor Name:</strong> ` + visitor.visitorname + `
-		  <br><strong>Visitor Phone Number:</strong> ` + visitor.phonenumber + `
-		  <br><strong>Visitor Email:</strong> ` + visitor.email + `
-		  <br><strong>Checkin Time:</strong> ` + visitor.checkin + ``;
+    let sms_string = `Mr. ` + host.hostname.toUpperCase() + `, you have a visitor.\nDetails are as follows:\nVisitor Name: ` + visitor.visitorname + `\nVisitor Phone Number: ` + visitor.phonenumber + `\nVisitor Email: ` + visitor.email + `\nCheckin Time:` + visitor.checkin + `\n`;
+
+    nexmo.message.sendSms(config.nexmoSMS.whitelist_contact, to, sms_string, {type:'unicode'},(err,response)=>{
+      if(err){
+        console.log(err);
+      }else{
+        console.log(response);
+      }
+    });
+  });
+}
+
+
+function sendCheckoutSMS(visitor){
+  var host = models.Host.findOne({ where:{ id: visitor.hostid } }).then(host => {
+  	const nexmo = new Nexmo({
+      apiKey: config.nexmoSMS.API_KEY,
+      apiSecret: config.nexmoSMS.SECRET_KEY,
+    });
+
+    const from = host.name;
+    const to = config.nexmoSMS.whitelist_contact;
+
+    let sms_string = `Mr. ` + visitor.visitorname.toUpperCase() + `, thank you for your visit.\nHere are your visit details:\nName: ` + visitor.visitorname + `\nHost Name: ` + host.hostname + `\nHost Phone Number: ` + host.phonenumber + `\nVisited Address: ` + host.address + `\nCheckin Time: ` + visitor.checkin + `\nCheckout Time: ` + visitor.checkout + `\n`;
 
     nexmo.message.sendSms(config.nexmoSMS.whitelist_contact, to, sms_string, {type:'unicode'},(err,response)=>{
       if(err){
