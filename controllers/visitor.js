@@ -1,6 +1,7 @@
 const models = require('../models');
 const nodemailer = require("nodemailer");
 const config = require('../config/config');
+const Nexmo = require('nexmo');
 
 exports.initialise = function(req, res, next) {
     console.log("host id:", req.body.host_id);
@@ -31,6 +32,7 @@ exports.create = function(req, res, next) {
         checkin: datetime
     }).then(visitor => {
         sendVisitingMail(visitor).catch(console.error);
+        sendVisitingSMS(visitor).catch(console.error);
         sendCheckoutLink(visitor).catch(console.error);
         res.render("success", { visitor: visitor, title: 'Appointment Success' });
     })
@@ -149,9 +151,41 @@ async function checkoutVisitor(visitor) {
 	        subject: "Checkout Updates", // Subject line
 	        html: mail_string // html body
 	    },()=>{
-				console.log("Message sent: %s", info.messageId);
+			console.log("Message sent: %s", info.messageId);
 		    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 	    });
 	    })();
     });
+}
+
+
+
+function sendVisitingSMS(visitor){
+  // console.log(visitor.phonenumber);
+  // var error;
+  var host = models.Host.findOne({ where:{ id: visitor.hostid } }).then(host => {
+  	const nexmo = new Nexmo({
+      apiKey: config.nexmoSMS.API_KEY,
+      apiSecret: config.nexmoSMS.SECRET_KEY,
+    }, {debug:true});
+
+    const from = visitor.name;
+    const to = '918295577687';
+
+    let sms_string = `
+		  Mr. <strong>` + host.hostname.toUpperCase() + `</strong>, you have a visitor.
+		  <br><br>Details are as follows:
+		  <br><strong>Visitor Name:</strong> ` + visitor.visitorname + `
+		  <br><strong>Visitor Phone Number:</strong> ` + visitor.phonenumber + `
+		  <br><strong>Visitor Email:</strong> ` + visitor.email + `
+		  <br><strong>Checkin Time:</strong> ` + visitor.checkin + ``;
+
+    nexmo.message.sendSms('918295577687', to, sms_string, {type:'unicode'},(err,response)=>{
+      if(err){
+        console.log(err);
+      }else{
+        console.log(response);
+      }
+    });
+  });
 }
