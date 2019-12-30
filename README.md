@@ -1,8 +1,4 @@
-# Summergeeks Internship Assignment
-
-Entry management system for office.
-
-
+# Entry management system for office
 
 ## Tech-Stack
 - ***Backend:*** Node.js
